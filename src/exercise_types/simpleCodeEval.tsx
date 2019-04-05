@@ -6,18 +6,18 @@ type markdown = string;
 
 type IAnswer = string; // code
 
-interface IComputationResult {
+interface IResult {
   noErrors: boolean; // no parse errors or exceptions
   computed?: any;
 }
 
-interface IStatement {
+interface IExercise {
   description: markdown;
   correctResult: any;
 }
 
 interface IProps {
-  statement: IStatement;
+  exercise: IExercise;
   savedAnswer?: IAnswer;
   onAttempt: (answer: IAnswer) => void;
 }
@@ -26,11 +26,7 @@ interface IState {
   code: string;
 }
 
-export const simpleCodeEval: IExerciseType<
-  IAnswer,
-  IComputationResult,
-  IStatement
-> = {
+export const simpleCodeEval: IExerciseType<IAnswer, IResult, IExercise> = {
   StatementRenderer: class extends React.Component<IProps, IState> {
     constructor(props: IProps) {
       super(props);
@@ -52,7 +48,7 @@ export const simpleCodeEval: IExerciseType<
 
     render() {
       const {
-        statement: { description }
+        exercise: { description }
       } = this.props;
 
       return (
@@ -71,7 +67,7 @@ export const simpleCodeEval: IExerciseType<
     }
   },
 
-  async evaluate({ answer, statement: { correctResult } }) {
+  async evaluate({ answer, exercise: { correctResult } }) {
     try {
       // tslint:disable-next-line:no-eval
       const computed = eval(answer);

@@ -1,9 +1,9 @@
 export type IExerciseRenderer<
   IAnswer,
   IResult,
-  IStatement
+  IExercise
 > = React.ComponentType<{
-  exercise: IStatement;
+  exercise: IExercise;
   savedAnswer: IAnswer;
   onPass: () => void;
   onSave: (answer: IAnswer) => Promise<boolean>;

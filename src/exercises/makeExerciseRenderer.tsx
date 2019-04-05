@@ -34,7 +34,7 @@ export function makeExerciseRenderer<IAnswer, IResult, IStatement>(
       // evaluate
       const evaluation = await ExerciseType.evaluate({
         answer,
-        statement: exercise
+        exercise
       });
       this.setState({
         evaluation
@@ -68,7 +68,7 @@ export function makeExerciseRenderer<IAnswer, IResult, IStatement>(
       } else {
         return (
           <ExerciseType.StatementRenderer
-            statement={exercise}
+            exercise={exercise}
             savedAnswer={savedAnswer}
             onAttempt={this.onAttempt}
           />
