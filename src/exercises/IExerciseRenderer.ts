@@ -1,12 +1,12 @@
-export type IExerciseRenderer<
-  IAnswer,
-  IResult,
-  IExercise
-> = React.ComponentType<{
+import * as React from "react";
+import IEvaluation from "./IEvaluation";
+
+type ExerciseRenderer<IAnswer, IResult, IExercise> = React.ComponentType<{
   exercise: IExercise;
-  savedAnswer: IAnswer;
-  onPass: () => void;
-  onSave: (answer: IAnswer) => Promise<boolean>;
+  savedAnswer?: IAnswer;
+  evaluation?: IEvaluation<IResult>;
+  onAttempt: (answer: IAnswer) => void;
+  onRetry: () => void;
 }>;
 
-export default IExerciseRenderer;
+export default ExerciseRenderer;

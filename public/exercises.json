@@ -1,27 +1,73 @@
 [
   {
     "type": "md_multi",
-    "question": "Which of the following is most true?",
-    "options": [
-      "Markdown is wonderful",
-      "TypeScript is great",
-      "Generic types are hard"
-    ],
-    "correctIndex": 1
+    "exercise": {
+      "question": "Which of the following is most true?",
+      "choices": [
+        {
+          "id": 0,
+          "content": "Markdown is wonderful"
+        },
+        {
+          "id": 1,
+          "content": "TypeScript is great"
+        },
+        {
+          "id": 2,
+          "content": "Generic types are hard"
+        }
+      ],
+      "correctChoiceId": 1,
+      "randomize": true
+    }
+  },
+  {
+    "type": "simple_eval",
+    "exercise": {
+      "description": "Compute the number 42",
+      "correctResult": 42
+    }
   },
   {
     "type": "md_multi",
-    "question": "Which of the following is most true?",
-    "options": [
-      "Markdown is wonderful",
-      "TypeScript is great",
-      "Generic types are hard"
-    ],
-    "correctIndex": 1
+    "exercise": {
+      "question": "Which of these pieces of code is JavaScript?",
+      "choices": [
+        {
+          "id": 0,
+          "content": "```\nconst people = [\"Kelley\"].map(name => `Mr ${name}`)\n```"
+        },
+        {
+          "id": 1,
+          "content": "```\ndef hello (name):\n  print(name)\n```"
+        },
+        {
+          "id": 2,
+          "content": "```\naddThree :: Int -> Int -> Int -> Int\naddThree x y z = x + y + z\n```"
+        }
+      ],
+      "correctChoiceId": 0
+    }
   },
   {
-    "type": "eval",
-    "description": "Compute the number 42",
-    "correctResult": 42
+    "type": "md_multi",
+    "exercise": {
+      "question": "Which setup would you prefer?",
+      "choices": [
+        {
+          "id": "vanilla-js",
+          "content": "Vanilla JS"
+        },
+        {
+          "id": "react+typescript",
+          "content": "React + TypeScript"
+        },
+        {
+          "id": "vue",
+          "content": "Vue.js"
+        }
+      ],
+      "correctChoiceId": "vue"
+    }
   }
 ]

@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as ReactMarkdown from "react-markdown";
-import { IExerciseType } from "../exercises";
+import { IExerciseRenderer, IExerciseType } from "../exercises";
 
 type markdown = string;
 
@@ -16,18 +16,18 @@ interface IExercise {
   correctResult: any;
 }
 
-interface IProps {
-  exercise: IExercise;
-  savedAnswer?: IAnswer;
-  onAttempt: (answer: IAnswer) => void;
-}
+type IProps = React.ComponentProps<
+  IExerciseRenderer<IAnswer, IResult, IExercise>
+>;
 
 interface IState {
   code: string;
 }
 
 export const simpleCodeEval: IExerciseType<IAnswer, IResult, IExercise> = {
-  StatementRenderer: class extends React.Component<IProps, IState> {
+  id: "simple_eval",
+
+  ExerciseRenderer: class extends React.Component<IProps, IState> {
     constructor(props: IProps) {
       super(props);
       this.state = {
@@ -35,8 +35,7 @@ export const simpleCodeEval: IExerciseType<IAnswer, IResult, IExercise> = {
       };
     }
 
-    onSubmit = (e: any) => {
-      e.preventDefault();
+    check = () => {
       this.props.onAttempt(this.state.code);
     };
 
@@ -46,6 +45,44 @@ export const simpleCodeEval: IExerciseType<IAnswer, IResult, IExercise> = {
       });
     };
 
+    retry = () => {
+      const { onRetry } = this.props;
+      this.setState({
+        code: ""
+      });
+      onRetry();
+    };
+
+    renderEvaluation() {
+      const { evaluation } = this.props;
+      if (evaluation) {
+        const {
+          result: { noErrors, computed },
+          passed
+        } = evaluation;
+
+        if (!noErrors) {
+          return <p>Your code did not compute</p>;
+        } else {
+          const color = passed ? "green" : "red";
+          return (
+            <div>
+              <p style={{ color }}>
+                Your code evaluated to: {JSON.stringify(computed)}
+              </p>
+              {passed ? (
+                <p>
+                  <button onClick={this.retry}>Try again</button>
+                </p>
+              ) : null}
+            </div>
+          );
+        }
+      }
+
+      return null;
+    }
+
     render() {
       const {
         exercise: { description }
@@ -54,14 +91,13 @@ export const simpleCodeEval: IExerciseType<IAnswer, IResult, IExercise> = {
       return (
         <div>
           <ReactMarkdown source={description} />
-          <form onSubmit={this.onSubmit}>
-            <textarea
-              name="code"
-              value={this.state.code}
-              onChange={this.onCodeChange}
-            />
-            <button>Submit</button>
-          </form>
+          <textarea
+            name="code"
+            value={this.state.code}
+            onChange={this.onCodeChange}
+          />
+          <button onClick={this.check}>Check</button>
+          {this.renderEvaluation()}
         </div>
       );
     }
@@ -88,15 +124,5 @@ export const simpleCodeEval: IExerciseType<IAnswer, IResult, IExercise> = {
       },
       passed: false
     };
-  },
-
-  ResultRenderer({ result }) {
-    if (result.noErrors) {
-      return (
-        <div>Your code evaluated to: {JSON.stringify(result.computed)}</div>
-      );
-    } else {
-      return <div>Your code did not parse or compute.</div>;
-    }
   }
 };

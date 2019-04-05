@@ -1,16 +1,15 @@
 import IEvaluation from "./IEvaluation";
+import IExerciseRenderer from "./IExerciseRenderer";
 
 export default interface IExerciseType<IAnswer, IResult, IExercise> {
-  StatementRenderer: React.ComponentType<{
-    exercise: IExercise;
-    savedAnswer?: IAnswer;
-    onAttempt: (answer: IAnswer) => void;
-  }>;
+  id: string;
+
+  prepare?: (exercise: IExercise) => Promise<IExercise>;
+
+  ExerciseRenderer: IExerciseRenderer<IAnswer, IResult, IExercise>;
 
   evaluate: (attempt: {
-    answer: IAnswer;
     exercise: IExercise;
+    answer: IAnswer;
   }) => Promise<IEvaluation<IResult>>;
-
-  ResultRenderer: React.ComponentType<{ result: IResult }>;
 }
