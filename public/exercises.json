@@ -1,0 +1,27 @@
+[
+  {
+    "type": "md_multi",
+    "question": "Which of the following is most true?",
+    "options": [
+      "Markdown is wonderful",
+      "TypeScript is great",
+      "Generic types are hard"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "type": "md_multi",
+    "question": "Which of the following is most true?",
+    "options": [
+      "Markdown is wonderful",
+      "TypeScript is great",
+      "Generic types are hard"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "type": "eval",
+    "description": "Compute the number 42",
+    "correctResult": 42
+  }
+]
