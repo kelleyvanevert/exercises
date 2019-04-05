@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import * as React from "react";
 import * as ReactMarkdown from "react-markdown";
 import { IExerciseType } from "../exercises";
@@ -58,27 +59,34 @@ export function makeMultipleChoiceExerciseType<IChoiceContent>(
       return (
         <div>
           <ReactMarkdown source={question} />
-          <ul>
-            {choices.map(choice => (
-              <li
-                key={choice.id}
-                onClick={() => (evaluation ? null : onAttempt(choice))}
-              >
-                <ChoiceContentRenderer
-                  content={choice.content}
-                  ok={
-                    evaluation && evaluation.result.choiceId === choice.id
-                      ? evaluation.passed
-                      : undefined
-                  }
-                />
-              </li>
-            ))}
+          <ul className="list-group mb-3">
+            {choices.map(choice => {
+              const isAnswer =
+                evaluation && evaluation.result.choiceId === choice.id;
+              return (
+                <li
+                  key={choice.id}
+                  style={{ cursor: "pointer" }}
+                  className={classNames({
+                    "pb-0": true, // to make up for the content's bottom margin
+                    "list-group-item": true,
+                    "list-group-item-action": !evaluation,
+                    "list-group-item-success":
+                      evaluation && isAnswer && evaluation.passed,
+                    "list-group-item-danger":
+                      evaluation && isAnswer && !evaluation.passed
+                  })}
+                  onClick={() => (evaluation ? null : onAttempt(choice))}
+                >
+                  <ChoiceContentRenderer content={choice.content} />
+                </li>
+              );
+            })}
           </ul>
           {evaluation ? (
             <div>
               <a href="#" onClick={onRetry}>
-                Try again
+                {evaluation.passed ? "Clear" : "Try again"}
               </a>
             </div>
           ) : null}
@@ -101,16 +109,7 @@ export function makeMultipleChoiceExerciseType<IChoiceContent>(
 
 export const markdownMultipleChoice = makeMultipleChoiceExerciseType<markdown>(
   "md_multi",
-  ({ content, ok }) => {
-    const color = ok === undefined ? "inherit" : ok ? "green" : "red";
-    const annotation = ok === undefined ? null : ok ? "✓" : "✗";
-    return (
-      <div style={{ color }}>
-        {annotation ? (
-          <div style={{ float: "left", marginRight: 10 }}>{annotation}</div>
-        ) : null}
-        <ReactMarkdown source={content} />
-      </div>
-    );
+  ({ content }) => {
+    return <ReactMarkdown source={content} />;
   }
 );

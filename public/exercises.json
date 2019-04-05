@@ -24,7 +24,7 @@
   {
     "type": "simple_eval",
     "exercise": {
-      "description": "Compute the number 42",
+      "description": "Compute the number `42`",
       "correctResult": 42
     }
   },
@@ -35,15 +35,15 @@
       "choices": [
         {
           "id": 0,
-          "content": "```\nconst people = [\"Kelley\"].map(name => `Mr ${name}`)\n```"
+          "content": "```javascript\nconst people = [\"Kelley\"].map(name => `Mr ${name}`)\n```"
         },
         {
           "id": 1,
-          "content": "```\ndef hello (name):\n  print(name)\n```"
+          "content": "```python\ndef hello (name):\n  print(name)\n```"
         },
         {
           "id": 2,
-          "content": "```\naddThree :: Int -> Int -> Int -> Int\naddThree x y z = x + y + z\n```"
+          "content": "```haskell\naddThree :: Int -> Int -> Int -> Int\naddThree x y z = x + y + z\n```"
         }
       ],
       "correctChoiceId": 0

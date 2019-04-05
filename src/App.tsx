@@ -114,54 +114,66 @@ class App extends React.Component<{}, IState> {
     const { loading, unlockedUpTo, exerciseItems } = this.state;
 
     return (
-      <div>
-        <h2>Exercises</h2>
-        <p>
-          These exercises are only meant for you: to practice and gain
-          understanding through it. They are not evaluated formally. You may
-          choose to practice as little or often as you think is necessary. Your
-          answers are automatically saved, so you don't have to worry about
-          losing them.
-        </p>
-        {loading ? (
-          <p>Loading...</p>
-        ) : (
-          <ul>
-            {exerciseItems
-              .slice(0, unlockedUpTo + 1)
-              .map(({ type, exercise, savedAnswer, evaluation }, i) => {
-                const ExerciseRenderer =
-                  exerciseTypesMap[type].ExerciseRenderer;
-                return (
-                  <li key={i}>
+      <div className="container my-5">
+        <div className="row">
+          <div className="col-md-10 offset-md-1 col-lg-8 offset-lg-2">
+            <h1 className="mb-4">Exercises</h1>
+            <p className="lead mb-5">
+              These exercises are only meant for you: to practice and gain
+              understanding through it. They are not evaluated formally. You may
+              choose to practice as little or often as you think is necessary.
+              Your answers are automatically saved, so you don't have to worry
+              about losing them.
+            </p>
+            {loading ? (
+              <p>Loading...</p>
+            ) : (
+              <ul className="list-unstyled">
+                {exerciseItems
+                  .slice(0, unlockedUpTo + 1)
+                  .map(({ type, exercise, savedAnswer, evaluation }, i) => {
+                    const ExerciseRenderer =
+                      exerciseTypesMap[type].ExerciseRenderer;
+                    return (
+                      <li key={i} className="mb-4">
+                        <h5>
+                          Exercise {i + 1} / {exerciseItems.length}
+                        </h5>
+                        <ExerciseRenderer
+                          key={savedAnswer}
+                          exercise={exercise}
+                          savedAnswer={savedAnswer}
+                          evaluation={evaluation}
+                          onAttempt={(answer: unknown) =>
+                            this.onAttempt(i, answer)
+                          }
+                          onRetry={() => this.setEvaluation(i, null)}
+                        />
+                      </li>
+                    );
+                  })}
+                {unlockedUpTo === exerciseItems.length ? (
+                  <li>
+                    <p className="lead">
+                      <strong>Congratulations!</strong> You made it through all
+                      the exercises. This also means that we're quite confident
+                      you understand this topic well.
+                    </p>
                     <div>
-                      Exercise {i + 1} / {exerciseItems.length}
+                      <button
+                        type="button"
+                        className="btn btn-primary"
+                        onClick={this.startOver}
+                      >
+                        Start over
+                      </button>
                     </div>
-                    <ExerciseRenderer
-                      key={savedAnswer}
-                      exercise={exercise}
-                      savedAnswer={savedAnswer}
-                      evaluation={evaluation}
-                      onAttempt={(answer: unknown) => this.onAttempt(i, answer)}
-                      onRetry={() => this.setEvaluation(i, null)}
-                    />
                   </li>
-                );
-              })}
-            {unlockedUpTo === exerciseItems.length ? (
-              <li>
-                <strong>Congratulations!</strong> You made it through all the
-                exercises. This also means that we're quite confident you
-                understand this topic well.
-                <div>
-                  <a href="#" onClick={this.startOver}>
-                    Start over
-                  </a>
-                </div>
-              </li>
-            ) : null}
-          </ul>
-        )}
+                ) : null}
+              </ul>
+            )}
+          </div>
+        </div>
       </div>
     );
   }

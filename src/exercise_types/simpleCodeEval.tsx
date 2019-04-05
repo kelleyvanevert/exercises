@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import * as React from "react";
 import * as ReactMarkdown from "react-markdown";
 import { IExerciseRenderer, IExerciseType } from "../exercises";
@@ -64,17 +65,23 @@ export const simpleCodeEval: IExerciseType<IAnswer, IResult, IExercise> = {
         if (!noErrors) {
           return <p>Your code did not compute</p>;
         } else {
-          const color = passed ? "green" : "red";
           return (
             <div>
-              <p style={{ color }}>
+              <div
+                className={classNames({
+                  alert: true,
+                  "alert-success": passed,
+                  "alert-danger": !passed
+                })}
+                role="alert"
+              >
                 Your code evaluated to: {JSON.stringify(computed)}
+              </div>
+              <p>
+                <a href="#" onClick={this.retry}>
+                  {passed ? "Clear" : "Try again"}
+                </a>
               </p>
-              {passed ? (
-                <p>
-                  <button onClick={this.retry}>Try again</button>
-                </p>
-              ) : null}
             </div>
           );
         }
@@ -85,19 +92,34 @@ export const simpleCodeEval: IExerciseType<IAnswer, IResult, IExercise> = {
 
     render() {
       const {
-        exercise: { description }
+        exercise: { description },
+        evaluation
       } = this.props;
 
       return (
         <div>
           <ReactMarkdown source={description} />
-          <textarea
-            name="code"
-            value={this.state.code}
-            onChange={this.onCodeChange}
-          />
-          <button onClick={this.check}>Check</button>
-          {this.renderEvaluation()}
+          <div className="form-group">
+            <textarea
+              className="form-control"
+              rows={3}
+              name="code"
+              disabled={!!evaluation}
+              value={this.state.code}
+              onChange={this.onCodeChange}
+            />
+          </div>
+          {evaluation ? (
+            this.renderEvaluation()
+          ) : (
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={this.check}
+            >
+              Check now
+            </button>
+          )}
         </div>
       );
     }
