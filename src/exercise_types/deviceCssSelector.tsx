@@ -6,6 +6,21 @@ import * as React from "react";
 import * as ReactMarkdown from "react-markdown";
 import { IExerciseRenderer, IExerciseType } from "../exercises";
 
+type markdown = string;
+
+type IAnswer = string;
+
+interface IResult {
+  // possibly a dom tree or something
+  ok: boolean;
+}
+
+interface IExercise {
+  question: markdown;
+  html: string;
+  selector: string;
+}
+
 const adapter = {
   ...adapter_a,
   getName(node: IDomNode) {
@@ -25,20 +40,14 @@ function compile(selector: string, options: any): Pred {
   return (CSSselect.compile as (a: any, b: any) => any)(selector, options);
 }
 
-type markdown = string;
-
-type IAnswer = string;
-
-interface IResult {
-  // possibly a dom tree or something
-  ok: boolean;
-}
-
-interface IExercise {
-  question: markdown;
-  html: string;
-  selector: string;
-}
+const isExact = (node: IDomNode, a: Pred, b: Pred): boolean => {
+  if (node.nodeName === "#text") {
+    return true;
+  }
+  return a(node) === b(node)
+    ? node.childNodes.every(child => isExact(child, a, b))
+    : false;
+};
 
 type IProps = React.ComponentProps<
   IExerciseRenderer<IAnswer, IResult, IExercise>
@@ -51,15 +60,6 @@ interface IState {
   curr: Pred;
   exact: boolean;
 }
-
-const isExact = (node: IDomNode, a: Pred, b: Pred): boolean => {
-  if (node.nodeName === "#text") {
-    return true;
-  }
-  return a(node) === b(node)
-    ? node.childNodes.every(child => isExact(child, a, b))
-    : false;
-};
 
 export const deviseCssSelector: IExerciseType<IAnswer, IResult, IExercise> = {
   id: "devise_css_selector",

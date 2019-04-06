@@ -12,11 +12,7 @@ interface IChoice<IChoiceContent> {
 }
 
 type IAnswer = ID;
-
-interface IResult {
-  ok: boolean;
-  choiceId: ID;
-}
+type IResult = ID;
 
 interface IExercise<IChoiceContent> {
   question: markdown;
@@ -61,8 +57,7 @@ export function makeMultipleChoiceExerciseType<IChoiceContent>(
           <ReactMarkdown source={question} />
           <ul className="list-group mb-3">
             {choices.map(choice => {
-              const isAnswer =
-                evaluation && evaluation.result.choiceId === choice.id;
+              const isAnswer = evaluation && evaluation.result === choice.id;
               return (
                 <li
                   key={choice.id}
@@ -95,13 +90,9 @@ export function makeMultipleChoiceExerciseType<IChoiceContent>(
     },
 
     async evaluate({ answer: choice, exercise: { correctChoiceId } }) {
-      const ok = choice.id === correctChoiceId;
       return {
-        result: {
-          ok,
-          choiceId: choice.id
-        },
-        passed: ok
+        result: choice.id,
+        passed: choice.id === correctChoiceId
       };
     }
   };

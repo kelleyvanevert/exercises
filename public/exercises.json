@@ -1,13 +1,5 @@
 [
   {
-    "type": "devise_css_selector",
-    "exercise": {
-      "question": "Devise a CSS selector that targets specifically the labelled HTML elements",
-      "html": "<section>\n  <h1>Hello!</h1>\n\n  <section class=\"news\">\n    <article class=\"europe\">\n      <h2>Something happened</h2>\n      <p>Bla bla bla</p>\n    </article>\n    <article class=\"europe\">\n      <h2>Populism on the rise</h2>\n      <p>Bla bla bla</p>\n    </article>\n    <article class=\"americas\">\n      <h2>Some football game</h2>\n      <p>Bla bla bla</p>\n      <p>Bla bla bla</p>\n    </article>\n    <article class=\"africa\">\n      <h2>Last white Rhino</h2>\n      <p>Bla bla bla</p>\n    </article>\n    <article class=\"europe\">\n      <h2>Weather report</h2>\n      <p>Bla bla bla</p>\n      <p>Bla bla bla</p>\n    </article>\n  </section>\n</section>",
-      "selector": ".europe h2 + p"
-    }
-  },
-  {
     "type": "md_multi",
     "exercise": {
       "question": "Which of the following is most true?",
@@ -27,6 +19,14 @@
       ],
       "correctChoiceId": 1,
       "randomize": true
+    }
+  },
+  {
+    "type": "devise_css_selector",
+    "exercise": {
+      "question": "Devise a CSS selector that targets specifically the labelled HTML elements",
+      "html": "<section>\n  <h1>Hello!</h1>\n\n  <section class=\"news\">\n    <article class=\"europe\">\n      <h2>Something happened</h2>\n      <p>Bla bla bla</p>\n    </article>\n    <article class=\"europe\">\n      <h2>Populism on the rise</h2>\n      <p>Bla bla bla</p>\n    </article>\n    <article class=\"americas\">\n      <h2>Some football game</h2>\n      <p>Bla bla bla</p>\n      <p>Bla bla bla</p>\n    </article>\n    <article class=\"africa\">\n      <h2>Last white Rhino</h2>\n      <p>Bla bla bla</p>\n    </article>\n    <article class=\"europe\">\n      <h2>Weather report</h2>\n      <p>Bla bla bla</p>\n      <p>Bla bla bla</p>\n    </article>\n  </section>\n</section>",
+      "selector": ".europe h2 + p"
     }
   },
   {
