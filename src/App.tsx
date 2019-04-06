@@ -1,6 +1,6 @@
 import * as React from "react";
 import "./App.css";
-import { deviseCssSelector } from "./exercise_types/deviceCssSelector";
+import { deviseCssSelector } from "./exercise_types/deviseCssSelector";
 import { markdownMultipleChoice } from "./exercise_types/multipleChoice";
 import { simpleCodeEval } from "./exercise_types/simpleCodeEval";
 import { IEvaluation, IExerciseType } from "./exercises";
