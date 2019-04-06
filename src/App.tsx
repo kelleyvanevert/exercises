@@ -120,13 +120,20 @@ class App extends React.Component<{}, IState> {
         <div className="row">
           <div className="col-md-10 offset-md-1 col-lg-8 offset-lg-2">
             <h1 className="mb-4">Exercises</h1>
-            <p className="lead mb-5">
-              These exercises are only meant for you: to practice and gain
-              understanding through it. They are not evaluated formally. You may
-              choose to practice as little or often as you think is necessary.
-              Your answers are automatically saved, so you don't have to worry
-              about losing them.
-            </p>
+            <div className="lead mb-5">
+              <p>
+                These exercises are only meant for you: to practice and gain
+                understanding through it. They are not evaluated formally. You
+                may choose to practice as little or often as you think is
+                necessary. Your answers are automatically saved, so you don't
+                have to worry about losing them.
+              </p>
+              <p>
+                <a href="https://github.com/kelleyvanevert/exercises">
+                  What's this about?
+                </a>
+              </p>
+            </div>
             {loading ? (
               <p>Loading...</p>
             ) : (
