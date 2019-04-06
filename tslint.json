@@ -4,6 +4,7 @@
     "jsx-no-lambda": false,
     "member-access": [true, "no-public"],
     "no-console": false,
+    "no-unused-variable": false,
     "object-literal-sort-keys": false
   },
   "linterOptions": {

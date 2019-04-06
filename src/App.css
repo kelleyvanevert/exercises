@@ -1,0 +1,14 @@
+.open-tag.todo {
+  padding: 2px 0;
+  background: #ffed4d;
+}
+
+.open-tag.selected {
+  padding: 2px 0;
+  background: #ff5722;
+}
+
+.open-tag.todo.selected {
+  padding: 2px 0;
+  background: #4caf50;
+}

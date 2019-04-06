@@ -78,9 +78,13 @@ export const simpleCodeEval: IExerciseType<IAnswer, IResult, IExercise> = {
                 Your code evaluated to: {JSON.stringify(computed)}
               </div>
               <p>
-                <a href="#" onClick={this.retry}>
+                <button
+                  type="button"
+                  className="btn btn-link"
+                  onClick={this.retry}
+                >
                   {passed ? "Clear" : "Try again"}
-                </a>
+                </button>
               </p>
             </div>
           );

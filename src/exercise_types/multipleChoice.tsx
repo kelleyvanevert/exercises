@@ -85,9 +85,9 @@ export function makeMultipleChoiceExerciseType<IChoiceContent>(
           </ul>
           {evaluation ? (
             <div>
-              <a href="#" onClick={onRetry}>
+              <button type="button" className="btn btn-link" onClick={onRetry}>
                 {evaluation.passed ? "Clear" : "Try again"}
-              </a>
+              </button>
             </div>
           ) : null}
         </div>

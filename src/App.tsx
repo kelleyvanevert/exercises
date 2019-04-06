@@ -1,5 +1,6 @@
 import * as React from "react";
 import "./App.css";
+import { deviseCssSelector } from "./exercise_types/deviceCssSelector";
 import { markdownMultipleChoice } from "./exercise_types/multipleChoice";
 import { simpleCodeEval } from "./exercise_types/simpleCodeEval";
 import { IEvaluation, IExerciseType } from "./exercises";
@@ -7,7 +8,8 @@ import { IEvaluation, IExerciseType } from "./exercises";
 // I'd just love to have an existential type here :)
 const exerciseTypes: Array<IExerciseType<unknown, unknown, unknown>> = [
   markdownMultipleChoice,
-  simpleCodeEval
+  simpleCodeEval,
+  deviseCssSelector
 ];
 
 const exerciseTypesMap = exerciseTypes.reduce((map, exType) => {
@@ -154,10 +156,10 @@ class App extends React.Component<{}, IState> {
                   })}
                 {unlockedUpTo === exerciseItems.length ? (
                   <li>
+                    <h3>Congratulations!</h3>
                     <p className="lead">
-                      <strong>Congratulations!</strong> You made it through all
-                      the exercises. This also means that we're quite confident
-                      you understand this topic well.
+                      You made it through all the exercises. This also means
+                      that we're quite confident you understand this topic well.
                     </p>
                     <div>
                       <button
