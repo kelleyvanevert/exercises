@@ -51,7 +51,8 @@ I've parametrized the type over three exercise-type-specific types, although her
 
 ## What it would look like
 
-Spin it up and take a look! `yarn start`
+- https://cd-exercises.netlify.com/
+- Spin it up and take a look! `yarn start`
 
 ## Currently implemented exercise types
 
