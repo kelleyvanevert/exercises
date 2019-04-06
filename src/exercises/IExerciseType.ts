@@ -4,7 +4,7 @@ import IExerciseRenderer from "./IExerciseRenderer";
 export default interface IExerciseType<IAnswer, IResult, IExercise> {
   id: string;
 
-  prepare?: (exercise: IExercise) => Promise<IExercise>;
+  prepare?: (exercise: IExercise) => Promise<IExercise[]>;
 
   ExerciseRenderer: IExerciseRenderer<IAnswer, IResult, IExercise>;
 

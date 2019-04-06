@@ -43,7 +43,7 @@ export function makeMultipleChoiceExerciseType<IChoiceContent>(
       if (exercise.randomize) {
         shuffle(exercise.choices);
       }
-      return exercise;
+      return [exercise];
     },
 
     ExerciseRenderer({

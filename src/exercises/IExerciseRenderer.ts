@@ -4,7 +4,7 @@ import IEvaluation from "./IEvaluation";
 type ExerciseRenderer<IAnswer, IResult, IExercise> = React.ComponentType<{
   exercise: IExercise;
   savedAnswer?: IAnswer;
-  evaluation?: IEvaluation<IResult>;
+  evaluation: null | IEvaluation<IResult>;
   onAttempt: (answer: IAnswer) => void;
   onRetry: () => void;
 }>;

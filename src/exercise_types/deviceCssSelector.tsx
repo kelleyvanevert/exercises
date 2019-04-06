@@ -18,7 +18,7 @@ interface IResult {
 interface IExercise {
   question: markdown;
   html: string;
-  selector: string;
+  selector: string | string[];
 }
 
 const adapter = {
@@ -64,13 +64,20 @@ interface IState {
 export const deviseCssSelector: IExerciseType<IAnswer, IResult, IExercise> = {
   id: "devise_css_selector",
 
+  async prepare(exercise) {
+    if (exercise.selector instanceof Array) {
+      return exercise.selector.map(selector => ({ ...exercise, selector }));
+    }
+    return [exercise];
+  },
+
   ExerciseRenderer: class extends React.Component<IProps, IState> {
     constructor(props: IProps) {
       super(props);
       const parser = parse(props.exercise.html);
       const dom = parser.parse();
 
-      const todo = compile(props.exercise.selector, { adapter });
+      const todo = compile(props.exercise.selector as string, { adapter });
 
       const selector = props.savedAnswer || "";
       let curr: Pred = () => false;

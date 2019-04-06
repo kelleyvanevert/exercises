@@ -12,7 +12,9 @@ const exerciseTypes: Array<IExerciseType<unknown, unknown, unknown>> = [
   deviseCssSelector
 ];
 
-const exerciseTypesMap = exerciseTypes.reduce((map, exType) => {
+const exerciseTypesMap: {
+  [name: string]: IExerciseType<unknown, unknown, unknown>;
+} = exerciseTypes.reduce((map, exType) => {
   map[exType.id] = exType;
   return map;
 }, {});
@@ -42,17 +44,22 @@ class App extends React.Component<{}, IState> {
     const exerciseItems = (await response.json()) as IExerciseItem[];
     this.setState({
       loading: false,
-      exerciseItems: await Promise.all(
+      exerciseItems: (await Promise.all(
         exerciseItems
           .filter(item => !!exerciseTypesMap[item.type])
-          .map(async ({ type, exercise }) => {
-            const prepare = exerciseTypesMap[type].prepare;
+          .map(async item => {
+            let items = [{ ...item, evaluation: null }];
+            const prepare = exerciseTypesMap[item.type].prepare;
             if (prepare) {
-              exercise = await prepare(exercise);
+              items = (await prepare(item.exercise)).map(exercise => ({
+                type: item.type,
+                exercise,
+                evaluation: null
+              }));
             }
-            return { type, exercise, evaluation: null };
+            return items;
           })
-      )
+      )).flat()
     });
   }
 
@@ -149,7 +156,7 @@ class App extends React.Component<{}, IState> {
                           Exercise {i + 1} / {exerciseItems.length}
                         </h5>
                         <ExerciseRenderer
-                          key={savedAnswer}
+                          key={JSON.stringify(savedAnswer)}
                           exercise={exercise}
                           savedAnswer={savedAnswer}
                           evaluation={evaluation}
