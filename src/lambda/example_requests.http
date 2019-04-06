@@ -1,0 +1,11 @@
+
+GET http://localhost:9000/.netlify/functions/hello
+
+###
+
+POST http://localhost:9000/.netlify/functions/hello
+Content-Type: application/json
+
+{
+  "sourceCode": "let hello = (n => n+40)(2);"
+}

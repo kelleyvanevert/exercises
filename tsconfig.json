@@ -26,6 +26,8 @@
     "acceptance-tests",
     "webpack",
     "jest",
+    "lambda",
+    "src/lambda",
     "src/setupTests.ts"
   ]
 }

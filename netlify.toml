@@ -1,6 +1,4 @@
-[Settings]
-
 [build]
-  publish = "build/"
   command = "yarn build"
-  functions = "functions/"
+  functions = "lambda/"
+  publish = "build/"
