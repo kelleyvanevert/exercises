@@ -15,10 +15,16 @@ interface IResult {
   ok: boolean;
 }
 
+interface IExerciseSet {
+  question: markdown;
+  html: string;
+  selectors: string[];
+}
+
 interface IExercise {
   question: markdown;
   html: string;
-  selector: string | string[];
+  selector: string;
 }
 
 const adapter = {
@@ -61,14 +67,16 @@ interface IState {
   exact: boolean;
 }
 
-export const deviseCssSelector: IExerciseType<IAnswer, IResult, IExercise> = {
+export const deviseCssSelector: IExerciseType<
+  IAnswer,
+  IResult,
+  IExercise,
+  IExerciseSet
+> = {
   id: "devise_css_selector",
 
-  async prepare(exercise) {
-    if (exercise.selector instanceof Array) {
-      return exercise.selector.map(selector => ({ ...exercise, selector }));
-    }
-    return [exercise];
+  expand({ question, html, selectors }) {
+    return selectors.map(selector => ({ question, html, selector }));
   },
 
   ExerciseRenderer: class extends React.Component<IProps, IState> {

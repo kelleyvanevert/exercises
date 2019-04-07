@@ -1,5 +1,21 @@
 [
   {
+    "type": "fp_expression",
+    "exerciseSet": {
+      "data": "let pokemon = [\n  { name: 'Bulbasaur',  weight:  6.9 },\n  { name: 'Charizard',  weight: 90.5 },\n  { name: 'Squirtle',   weight:  9   },\n  { name: 'Jigglypuff', weight:  5.5 },\n  { name: 'Diglett',    weight:   .8 },\n];",
+      "exercises": [
+        {
+          "question": "Write a single JavaScript expression that computes the number of Pokemon.",
+          "compute": "pokemon.length"
+        },
+        {
+          "question": "Write a single JavaScript expression that computes the total weight of the following Pokemon.",
+          "compute": "pokemon.map(p => p.weight).reduce((a, b) => a + b, 0)"
+        }
+      ]
+    }
+  },
+  {
     "type": "md_multi",
     "exercise": {
       "question": "Which of the following is most true?",
@@ -23,10 +39,10 @@
   },
   {
     "type": "devise_css_selector",
-    "exercise": {
+    "exerciseSet": {
       "question": "Devise a CSS selector that targets specifically the labelled HTML elements",
       "html": "<section>\n  <h1>Hello!</h1>\n\n  <section class=\"news\">\n    <article class=\"europe\">\n      <h2>Something happened</h2>\n      <p>Bla bla bla</p>\n    </article>\n    <article class=\"europe\">\n      <h2>Populism on the rise</h2>\n      <p>Bla bla bla</p>\n    </article>\n    <article class=\"americas\">\n      <h2>Some football game</h2>\n      <p>Bla bla bla</p>\n      <p>Bla bla bla</p>\n    </article>\n    <article class=\"africa\">\n      <h2>Last white Rhino</h2>\n      <p>Bla bla bla</p>\n    </article>\n    <article class=\"europe\">\n      <h2>Weather report</h2>\n      <p>Bla bla bla</p>\n      <p>Bla bla bla</p>\n    </article>\n  </section>\n</section>",
-      "selector": ["section", "h2 + p", ".europe h2 + p"]
+      "selectors": ["section", "h2 + p", ".europe h2 + p"]
     }
   },
   {
@@ -55,27 +71,6 @@
         }
       ],
       "correctChoiceId": 0
-    }
-  },
-  {
-    "type": "md_multi",
-    "exercise": {
-      "question": "Which setup would you prefer?",
-      "choices": [
-        {
-          "id": "vanilla-js",
-          "content": "Vanilla JS"
-        },
-        {
-          "id": "react+typescript",
-          "content": "React + TypeScript"
-        },
-        {
-          "id": "vue",
-          "content": "Vue.js"
-        }
-      ],
-      "correctChoiceId": "vue"
     }
   }
 ]

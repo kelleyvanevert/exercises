@@ -1,10 +1,17 @@
 import IEvaluation from "./IEvaluation";
 import IExerciseRenderer from "./IExerciseRenderer";
 
-export default interface IExerciseType<IAnswer, IResult, IExercise> {
+export default interface IExerciseType<
+  IAnswer,
+  IResult,
+  IExercise,
+  IExerciseSet = null
+> {
   id: string;
 
-  prepare?: (exercise: IExercise) => Promise<IExercise[]>;
+  expand?: (exerciseSet: IExerciseSet) => IExercise[];
+
+  prepare?: (exercise: IExercise) => Promise<IExercise>;
 
   ExerciseRenderer: IExerciseRenderer<IAnswer, IResult, IExercise>;
 

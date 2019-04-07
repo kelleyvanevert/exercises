@@ -1,19 +1,18 @@
 import * as React from "react";
 import "./App.css";
 import { deviseCssSelector } from "./exercise_types/deviseCssSelector";
+import { fpExpression } from "./exercise_types/fpExpression";
 import { markdownMultipleChoice } from "./exercise_types/multipleChoice";
 import { simpleCodeEval } from "./exercise_types/simpleCodeEval";
 import { IEvaluation, IExerciseType } from "./exercises";
 
 // I'd just love to have an existential type here :)
-const exerciseTypes: Array<IExerciseType<unknown, unknown, unknown>> = [
-  markdownMultipleChoice,
-  simpleCodeEval,
-  deviseCssSelector
-];
+const exerciseTypes: Array<
+  IExerciseType<unknown, unknown, unknown, unknown>
+> = [markdownMultipleChoice, simpleCodeEval, deviseCssSelector, fpExpression];
 
 const exerciseTypesMap: {
-  [name: string]: IExerciseType<unknown, unknown, unknown>;
+  [name: string]: IExerciseType<unknown, unknown, unknown, unknown>;
 } = exerciseTypes.reduce((map, exType) => {
   map[exType.id] = exType;
   return map;
@@ -41,22 +40,37 @@ class App extends React.Component<{}, IState> {
 
   async componentDidMount() {
     const response = await fetch("/exercises.json");
-    const exerciseItems = (await response.json()) as IExerciseItem[];
+    const data = await response.json();
     this.setState({
       loading: false,
       exerciseItems: (await Promise.all(
-        exerciseItems
-          .filter(item => !!exerciseTypesMap[item.type])
-          .map(async item => {
-            let items = [{ ...item, evaluation: null }];
-            const prepare = exerciseTypesMap[item.type].prepare;
-            if (prepare) {
-              items = (await prepare(item.exercise)).map(exercise => ({
-                type: item.type,
-                exercise,
-                evaluation: null
-              }));
+        data
+          .filter((item: { type: string }) => !!exerciseTypesMap[item.type])
+          .map(async (item: any) => {
+            const expand = exerciseTypesMap[item.type].expand;
+            if (!expand && "exerciseSet" in item) {
+              console.log("ERR: cannot expand exercise set:", item);
+              return [];
             }
+            let items =
+              expand && "exerciseSet" in item
+                ? expand(item.exerciseSet).map(exercise => ({
+                    type: item.type,
+                    exercise,
+                    evaluation: null
+                  }))
+                : [{ ...item, evaluation: null }];
+
+            const prepare =
+              exerciseTypesMap[item.type].prepare ||
+              Promise.resolve.bind(Promise);
+            items = await Promise.all(
+              items.map(async (itm: any) => ({
+                ...itm,
+                exercise: await prepare(itm.exercise)
+              }))
+            );
+
             return items;
           })
       )).flat()
