@@ -137,7 +137,7 @@ class App extends React.Component<{}, IState> {
     const { loading, unlockedUpTo, exerciseItems } = this.state;
 
     return (
-      <div className="container my-5">
+      <div className="container mt-5" style={{ marginBottom: "20rem" }}>
         <div className="row">
           <div className="col-md-10 offset-md-1 col-lg-8 offset-lg-2">
             <h1 className="mb-4">Exercises</h1>

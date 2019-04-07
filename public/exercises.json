@@ -3,13 +3,19 @@
     "type": "fp_expression",
     "exerciseSet": {
       "data": "let pokemon = [\n  { name: 'Bulbasaur',  weight:  6.9 },\n  { name: 'Charizard',  weight: 90.5 },\n  { name: 'Squirtle',   weight:  9   },\n  { name: 'Jigglypuff', weight:  5.5 },\n  { name: 'Diglett',    weight:   .8 },\n];",
+      "whitelistVariables": ["pokemon"],
       "exercises": [
         {
-          "question": "Write a single JavaScript expression that computes the number of Pokemon.",
-          "compute": "pokemon.length"
+          "question": "As a warm-up, first write a single JavaScript _expression_ that evaluates to the number of Pokemon in the array `pokemon`.",
+          "compute": "pokemon.length",
+          "blacklistAnswers": ["5"]
         },
         {
-          "question": "Write a single JavaScript expression that computes the total weight of the following Pokemon.",
+          "question": "Now, write a JavaScript expression that computes the weight of the first Pokemon in the list.",
+          "compute": "pokemon[0].weight"
+        },
+        {
+          "question": "Write a JavaScript expression that computes the total weight of the following Pokemon.",
           "compute": "pokemon.map(p => p.weight).reduce((a, b) => a + b, 0)"
         }
       ]
